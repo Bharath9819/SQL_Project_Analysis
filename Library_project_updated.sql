@@ -416,3 +416,28 @@ From issued_status as x
 Left join Return_status as x1
 on x.issued_id = x1.issued_id
 where  return_id is NUll
+
+
+--Task 13: Identify Members with Overdue Books**  
+--Write a query to identify members who have overdue books (assume a 30-day return period). 
+--Display the member's_id, member's name, book title, issue date, and days overdue.
+
+Select * from employee
+Select * from books
+Select * from issued_status
+Select * from return_status
+Select * from Members
+
+Select 
+member_id, member_name, Issued_book_name, issued_date,--rs.return_date,
+current_date - ist.issued_date as due_day
+From issued_status as ist
+join members as mem
+on ist.issued_member_id = mem.member_id
+join books as bk 
+on bk.isbn = ist.issued_book_isbn
+Left join return_status as rs
+on ist.issued_id = rs.issued_id
+where rs.return_date is null
+and (current_date - ist.issued_date) >30
+order by 1
